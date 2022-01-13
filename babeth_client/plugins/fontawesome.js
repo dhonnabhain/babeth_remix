@@ -1,6 +1,9 @@
 import { library, config } from '@fortawesome/fontawesome-svg-core'
 import { faGoogle } from '@fortawesome/free-brands-svg-icons'
 import {
+  faArrowAltCircleLeft,
+  faArrowAltCircleRight,
+  faBirthdayCake,
   faCalendarPlus,
   faCalendarTimes,
   faCheckSquare,
@@ -23,5 +26,8 @@ library.add(
   faCalendarPlus,
   faPlus,
   faTimes,
-  faUsers
+  faUsers,
+  faArrowAltCircleRight,
+  faArrowAltCircleLeft,
+  faBirthdayCake
 )

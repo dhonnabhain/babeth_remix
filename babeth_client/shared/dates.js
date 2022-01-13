@@ -7,7 +7,7 @@ export function getFormat(today = false) {
   return today ? `HH:mm` : 'EEEE dd MMMM y'
 }
 
-export function formatDate(date, today = false) {
+export function formatDate(date, today = false, ) {
   const formatedDate = format(
     utcToZonedTime(date, 'Europe/Paris'),
     getFormat(today),
@@ -17,6 +17,21 @@ export function formatDate(date, today = false) {
   )
 
   if (today) return formatedDate
+
+  return formatedDate
+    .split(' ')
+    .map(part => upperFirst(part))
+    .join(' ')
+}
+
+export function formatBirthday(date) {
+  const formatedDate = format(
+    utcToZonedTime(date, 'Europe/Paris'),
+    'dd/MM/y',
+    {
+      locale: fr
+    }
+  )
 
   return formatedDate
     .split(' ')

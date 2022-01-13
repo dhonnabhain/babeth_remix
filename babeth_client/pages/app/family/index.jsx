@@ -1,20 +1,21 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useEffect, useState } from 'react'
-import Events from '../../components/events/Events'
-import Today from '../../components/Today'
-import { supabase } from '../../plugins/supabase'
+import { supabase } from '../../../plugins/supabase'
 import { useRouter } from 'next/router'
-import Greetings from '../../components/Greetings'
-import Link from 'next/link'
 import axios from 'axios'
-import Logout from '../../components/Logout'
+import Person from '../../../components/family/person'
 
-export default function Home() {
+export default function FamilyScreen() {
   const router = useRouter()
+
   const [session, setSession] = useState(null)
   const [isViewer, setIsViewer] = useState(false)
 
+  const [people, setPeople] = useState([])
+
   useEffect(() => {
     const foundSession = supabase.auth.session()
+
     if (!foundSession) router.push('/')
 
     axios
@@ -28,6 +29,10 @@ export default function Home() {
             .post('/api/isViewer', { email: foundSession.user.email })
             .then(res => setIsViewer(res.data.viewer))
 
+          supabase
+            .from('people')
+            .select()
+            .then(res => setPeople(res.data))
         }
       })
       .catch(res => router.push('/'))
@@ -40,22 +45,22 @@ export default function Home() {
 
   return (
     <main className="space-y-8 p-6">
-      {isViewer ? 'viewer' : 'pas viewer'}
-
-      <div className="flex flex-col-reverse sm:flex-row sm:justify-between">
-        <div className="space-y-1">
-          <Greetings session={session} />
-          <Today />
-        </div>
-
-        <Link href="/app/family">Go to the family</Link>
-
-        <Logout isViewer={isViewer} />
+      <div className="flex space-x-2 items-center mb-8 text-gray-800">
+        <h2 className="text-2xl font-bold leading-7 sm:text-3xl sm:truncate">
+          Membres de la famille
+        </h2>
       </div>
 
-      <Events type="today" />
-      <Events type="next" />
-      <Events type="later" />
+      <div>
+        <div
+          role="list"
+          className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full"
+        >
+          {people.map((person, idx) => {
+            return <Person key={idx} person={person} />
+          })}
+        </div>
+      </div>
     </main>
   )
 }
