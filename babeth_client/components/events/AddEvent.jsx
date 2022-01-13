@@ -34,7 +34,6 @@ export default function AddEvent({ type }) {
 
     if (title !== '' && date !== '') {
       axios.post('/api/events', { title, date }).then(() => {
-        mutate(`/api/events?type=${type}`)
         setOpen(false)
       })
     }

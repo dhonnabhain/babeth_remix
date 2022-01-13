@@ -21,6 +21,11 @@ i18n
           logout: 'Déconnexion',
           greetings: 'Bonjour ',
           cancel: 'Annuler',
+          unauthorized: {
+            title: 'Email non authorisé',
+            subtitle:
+              'Babeth est une application privé, veuillez vérifier votre email de connexion'
+          },
           event: {
             title: 'Ajouter un événement',
             empty: "Rien n'est prévu",

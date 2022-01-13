@@ -9,7 +9,7 @@ import AddEvent from './AddEvent'
 
 export default function Events({ type }) {
   const { t } = useTranslation()
-  const { data, error } = useSWR(['/api/events', type], fetcher, { refreshInterval: 5000 })
+  const { data, error } = useSWR(['/api/events', type], fetcher, { refreshInterval: 999999995000 })
 
   if (error) return <div>Nope</div>
   if (!data) return <div>loading...</div>

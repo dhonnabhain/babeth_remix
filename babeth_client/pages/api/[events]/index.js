@@ -28,44 +28,50 @@ function eventDateFactory(date, end = false) {
   return formatISO(end ? addHours(parsed, 1) : parsed)
 }
 
-function getEvents(req, res) {
-  Calendar.events.list(
-    {
-      calendarId: process.env.NEXT_GOOGLE_CALENDAR_ID,
-      maxResults: 10,
-      singleEvents: true,
-      orderBy: 'startTime',
-      ...period[req.query.type]
-    },
-    (err, events) => {
-      return res.status(200).json(events.data.items)
-    }
-  )
+async function getEvents(req) {
+  return Calendar.events.list({
+    calendarId: process.env.NEXT_GOOGLE_CALENDAR_ID,
+    maxResults: 10,
+    singleEvents: true,
+    orderBy: 'startTime',
+    ...period[req.query.type]
+  })
 }
 
-function storeEvent(req, res) {
-  Calendar.events.insert(
-    {
-      calendarId: process.env.NEXT_GOOGLE_CALENDAR_ID,
-      resource: {
-        summary: req.body.title,
-        start: {
-          dateTime: eventDateFactory(req.body.date),
-          timeZone: 'Europe/Paris'
-        },
-        end: {
-          dateTime: eventDateFactory(req.body.date),
-          timeZone: 'Europe/Paris'
-        }
+async function storeEvent(req) {
+  return Calendar.events.insert({
+    calendarId: process.env.NEXT_GOOGLE_CALENDAR_ID,
+    resource: {
+      summary: req.body.title,
+      start: {
+        dateTime: eventDateFactory(req.body.date),
+        timeZone: 'Europe/Paris'
+      },
+      end: {
+        dateTime: eventDateFactory(req.body.date),
+        timeZone: 'Europe/Paris'
       }
-    },
-    err => {
-      return res.status(200).json({ success: true })
     }
-  )
+  })
 }
 
-export default function handler(req, res) {
-  if (req.method === 'GET') return getEvents(req, res)
-  if (req.method === 'POST') return storeEvent(req, res)
+export default async function handler(req, res) {
+  let gRes = null
+
+  try {
+    switch (req.method) {
+      case 'GET':
+        const events = await getEvents(req)
+        gRes = events.data.items
+        break
+      case 'POST':
+        await storeEvent(req)
+        gRes = { success: true }
+        break
+    }
+
+    return res.status(200).json(gRes)
+  } catch (e) {
+    return res.status(500)
+  }
 }

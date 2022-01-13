@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 export default function Greetings({ session }) {
   const { t } = useTranslation()
+
   return (
     <h2 className="text-xl sm:text-2xl font-semibold text-gray-600">
       {t('greetings')}{' '}

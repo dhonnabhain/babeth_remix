@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import Person from '../../components/events/family/person'
+import Person from '../../components/family/person'
 
 export default function FamilyScreen() {
   return (
