@@ -4,16 +4,22 @@ import { useRouter } from 'next/router'
 import axios from 'axios'
 import { supabase } from '../../../plugins/supabase'
 import Link from 'next/link'
+import { t } from 'i18next'
+import { formatBirthday } from '../../../shared/dates'
 
 export default function PersonScreen() {
   const router = useRouter()
-  console.log(router)
+
   const [session, setSession] = useState(null)
   const [isViewer, setIsViewer] = useState(false)
   const id = router.query.id || null
 
   const target = id
-
+  const items = [
+    { field: 'birthday', icon: 'birthday-cake' },
+    { field: 'city', icon: 'building' },
+    { field: 'work', icon: 'briefcase' }
+  ]
   const [person, setPerson] = useState(null)
 
   useEffect(() => {
@@ -49,7 +55,16 @@ export default function PersonScreen() {
         .select()
         .match({ id: router.query.id })
         .then(res => {
-          setPerson(res.data[0])
+          // setPerson(res.data[0])
+          supabase.storage
+            .from('people')
+            .createSignedUrl(res.data[0].avatar.replace('people/', ''), 60)
+            .then(({ signedURL }) => {
+              // setAvatar(signedURL)
+              // setIsLoading(false)
+
+              setPerson({ ...res.data[0], avatar: signedURL })
+            })
         })
     }
   }, [target])
@@ -71,12 +86,41 @@ export default function PersonScreen() {
         <div className="text-center items-center mb-8 text-gray-800">
           <img
             className="w-32 h-32 flex-shrink-0 mx-auto rounded-full object-cover ring-4 ring-blue-500"
-            src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&q=80"
+            src={person.avatar}
             alt=""
           />
           <h2 className=" mt-8 text-2xl font-bold leading-7 sm:text-3xl sm:truncate">
             {person.first_name} {person.last_name}
           </h2>
+        </div>
+
+        <div className="bg-white overflow-hidden shadow rounded-lg">
+          <div className="px-4 py-5 sm:p-6">
+            <div className="mt-6 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+              <dl className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2">
+                {items.map(({ field, icon }) => (
+                  <div key={field} className="sm:col-span-1">
+                    <dt className="flex items-center space-x-3 text-xl font-medium text-gray-500">
+                      <FontAwesomeIcon icon={icon} />
+
+                      <span>{t(`person.${field}`)}</span>
+                    </dt>
+                    <dd className="mt-2 text-xl text-gray-900">
+                      {field === 'birthday'
+                        ? formatBirthday(person[field])
+                        : person[field]}
+                    </dd>
+                  </div>
+                ))}
+                <div className="sm:col-span-2">
+                  <dt className="text-xl font-medium text-gray-500">About</dt>
+                  <dd className="mt-1 max-w-prose text-xl text-gray-900 space-y-5">
+                    {person.biography}
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
         </div>
       </main>
     </div>

@@ -1,4 +1,4 @@
-import { addDays, addHours, startOfHour } from 'date-fns'
+import { addDays, addHours, parse, parseISO, startOfHour } from 'date-fns'
 import { utcToZonedTime, format } from 'date-fns-tz'
 import { fr } from 'date-fns/locale'
 import upperFirst from 'lodash.upperfirst'
@@ -7,7 +7,7 @@ export function getFormat(today = false) {
   return today ? `HH:mm` : 'EEEE dd MMMM y'
 }
 
-export function formatDate(date, today = false, ) {
+export function formatDate(date, today = false) {
   const formatedDate = format(
     utcToZonedTime(date, 'Europe/Paris'),
     getFormat(today),
@@ -25,13 +25,9 @@ export function formatDate(date, today = false, ) {
 }
 
 export function formatBirthday(date) {
-  const formatedDate = format(
-    utcToZonedTime(date, 'Europe/Paris'),
-    'dd/MM/y',
-    {
-      locale: fr
-    }
-  )
+  const formatedDate = format(parseISO(date), 'dd MMMM y', {
+    locale: fr
+  })
 
   return formatedDate
     .split(' ')

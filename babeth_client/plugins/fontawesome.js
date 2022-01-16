@@ -4,6 +4,8 @@ import {
   faArrowAltCircleLeft,
   faArrowAltCircleRight,
   faBirthdayCake,
+  faBriefcase,
+  faBuilding,
   faCalendarPlus,
   faCalendarTimes,
   faCheckSquare,
@@ -12,6 +14,7 @@ import {
   faSignOutAlt,
   faSpinner,
   faTimes,
+  faUserPlus,
   faUsers
 } from '@fortawesome/free-solid-svg-icons'
 config.autoAddCss = false
@@ -29,5 +32,9 @@ library.add(
   faUsers,
   faArrowAltCircleRight,
   faArrowAltCircleLeft,
-  faBirthdayCake
+  faBirthdayCake,
+  faUserPlus,
+  faUsers,
+  faBuilding,
+  faBriefcase
 )
