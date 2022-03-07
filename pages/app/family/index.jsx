@@ -47,7 +47,7 @@ export default function FamilyScreen() {
 
   return (
     <div className="">
-      <nav className="px-3 pt-2">
+      <nav className="px-3 pt-2 flex justify-between">
         <Link href={'/app'}>
           <button
             type="button"
@@ -57,14 +57,14 @@ export default function FamilyScreen() {
             <span className="ml-3">{t('family.backEvents')}</span>
           </button>
         </Link>
+
+        <AddPerson />
       </nav>
       <main className="space-y-8 p-6">
         <div className="flex flex-col space-y-2 items-start mb-8 text-gray-800">
           <h2 className="text-2xl font-bold leading-7 sm:text-3xl sm:truncate">
             {t('family.title')}
           </h2>
-
-          
         </div>
 
         <div>

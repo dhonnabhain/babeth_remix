@@ -82,21 +82,21 @@ export default function PersonScreen() {
           </button>
         </Link>
       </nav>
-      <main className="max-w-xl mx-auto space-y-8 p-6">
+      <main className="w-2/3 mx-auto space-y-8 p-6">
         <div className="text-center items-center mb-8 text-gray-800">
           <img
             className="w-32 h-32 flex-shrink-0 mx-auto rounded-full object-cover ring-4 ring-blue-500"
             src={person.avatar}
             alt=""
           />
-          <h2 className=" mt-8 text-2xl font-bold leading-7 sm:text-3xl sm:truncate">
+          <h2 className="mt-8 text-2xl font-bold leading-7 sm:text-3xl sm:truncate">
             {person.first_name} {person.last_name}
           </h2>
         </div>
 
         <div className="bg-white overflow-hidden shadow rounded-lg">
           <div className="px-4 py-5 sm:p-6">
-            <div className="mt-6 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="mt-6 mx-auto px-4 sm:px-6">
               <dl className="grid grid-cols-1 gap-x-8 gap-y-8 sm:grid-cols-2">
                 {items.map(({ field, icon }) => (
                   <div key={field} className="sm:col-span-1">
@@ -113,7 +113,9 @@ export default function PersonScreen() {
                   </div>
                 ))}
                 <div className="sm:col-span-2">
-                  <dt className="text-xl font-medium text-gray-500">About</dt>
+                  <dt className="text-xl font-medium text-gray-500">
+                    {t('person.biography')}
+                  </dt>
                   <dd className="mt-1 max-w-prose text-xl text-gray-900 space-y-5">
                     {person.biography}
                   </dd>

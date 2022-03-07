@@ -106,7 +106,7 @@ export default function AddPerson() {
       <button
         type="button"
         aria-label={t('addEvent')}
-        className="w-full text-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 bg-blue-600 text-white hover:bg-blue-700 shadow-blue-500/50 focus:ring-blue-500 transition duration-150"
+        className="w-full text-center px-4 py-3 border border-transparent text-base font-medium rounded-md shadow-lg focus:outline-none focus:ring-2 focus:ring-offset-2 bg-blue-600 text-white hover:bg-blue-700 shadow-blue-500/50 focus:ring-blue-500 transition duration-150"
         onClick={toggleModal}
       >
         <FontAwesomeIcon icon="user-plus" className="mr-4" />

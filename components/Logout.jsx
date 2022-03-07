@@ -13,9 +13,7 @@ export default function Logout({ isViewer }) {
     router.push('/', undefined, { shallow: true })
   }
 
-  return isViewer ? (
-    ''
-  ) : (
+  return isViewer ? null : (
     <button
       onClick={e => {
         e.preventDefault()
