@@ -58,6 +58,8 @@ async function storeEvent(req) {
 export default async function handler(req, res) {
   let gRes = null
 
+  console.log(process.env.NEXT_GOOGLE_CALENDAR_ID)
+
   try {
     switch (req.method) {
       case 'GET':
