@@ -41,7 +41,7 @@ export default function Home() {
 
   return (
     <main className="space-y-8 p-6">
-      {isViewer ? 'viewer' : 'pas viewer'}
+      {/* {isViewer ? 'viewer' : 'pas viewer'} */}
 
       <div className="flex flex-col-reverse sm:flex-row sm:justify-between">
         <div className="space-y-1">
